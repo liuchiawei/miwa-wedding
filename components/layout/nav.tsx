@@ -13,23 +13,24 @@ export default function Nav() {
   if (pathname === "/") {
     return (
       <nav className="mx-auto p-2">
-      <ul className="flex gap-4 justify-center">
-        {Object.values(MESSAGES.navigation).map((item) => (
-          <li key={item.href} className="hover:-translate-y-1 transition-transform">
-            <Link href={item.href}>{item.text}</Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
+        <ul className="flex gap-4 justify-center">
+          {Object.values(MESSAGES.navigation).map((item) => (
+            <li
+              key={item.href}
+              className="hover:-translate-y-1 transition-transform"
+            >
+              <Link href={item.href}>{item.text}</Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     );
   }
   // other pages nav
   return (
     <Drawer swipeDirection="right">
       <DrawerTrigger className="fixed top-2 right-2">
-        <Button variant="outline" size="icon">
-          <Menu />
-        </Button>
+        <Menu className="size-4" />
       </DrawerTrigger>
       <DrawerContent>
         <ul>
