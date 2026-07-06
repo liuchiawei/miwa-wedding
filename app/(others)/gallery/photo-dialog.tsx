@@ -14,7 +14,7 @@ export default function PhotoDialog({
 }) {
   return (
     <Dialog>
-      <DialogTrigger className="size-full aspect-square object-cover">
+      <DialogTrigger className="size-full aspect-square">
         <Image
           src={src}
           alt={alt ?? "Wedding Photo"}
