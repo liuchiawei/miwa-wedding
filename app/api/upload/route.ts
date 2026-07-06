@@ -1,7 +1,5 @@
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse } from "next/server";
-import { getDb } from "@/lib/db";
-import { parseUploadMetadata } from "@/lib/upload-metadata";
 
 export async function POST(request: Request) {
   const body = (await request.json()) as HandleUploadBody;
@@ -29,18 +27,6 @@ export async function POST(request: Request) {
           tokenPayload: clientPayload,
           callbackUrl,
         };
-      },
-      onUploadCompleted: async ({ blob, tokenPayload }) => {
-        const meta = parseUploadMetadata(tokenPayload);
-        await getDb().photo.create({
-          data: {
-            blobUrl: blob.url,
-            pathname: blob.pathname,
-            contentType: blob.contentType,
-            guestName: meta.guestName ?? null,
-            message: meta.message ?? null,
-          },
-        });
       },
     });
 

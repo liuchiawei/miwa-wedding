@@ -26,3 +26,9 @@ model Photo {
 
   @@index([approved, createdAt])
 }
+
+model SiteSetting {
+  id                 String   @id @default("default")
+  autoApproveUploads Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
+}
