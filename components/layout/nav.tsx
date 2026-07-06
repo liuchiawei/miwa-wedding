@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { MESSAGES } from "@/lib/message";
@@ -25,13 +25,13 @@ export default function Nav() {
   }
   // other pages nav
   return (
-    <Sheet>
-      <SheetTrigger className="fixed top-2 right-2">
+    <Drawer swipeDirection="right">
+      <DrawerTrigger className="fixed top-2 right-2">
         <Button variant="outline" size="icon">
           <Menu />
         </Button>
-      </SheetTrigger>
-      <SheetContent>
+      </DrawerTrigger>
+      <DrawerContent>
         <ul>
           {Object.values(MESSAGES.navigation).map((item) => (
             <li key={item.href}>
@@ -39,7 +39,7 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-      </SheetContent>
-    </Sheet>
+      </DrawerContent>
+    </Drawer>
   );
 }
