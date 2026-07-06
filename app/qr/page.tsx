@@ -1,5 +1,6 @@
 import QRCode from "qrcode";
 import { headers } from "next/headers";
+import Image from "next/image";
 
 function getUploadUrl(origin: string) {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? origin;
@@ -25,7 +26,12 @@ export default async function QrPage() {
       <p>
         URL: <code>{uploadUrl}</code>
       </p>
-      <img src={dataUrl} alt={`QR code for ${uploadUrl}`} width={300} height={300} />
+      <Image
+        src={dataUrl}
+        alt={`QR code for ${uploadUrl}`}
+        width={300}
+        height={300}
+      />
       <p>
         <a href={dataUrl} download="miwa-wedding-upload-qr.png">
           PNG をダウンロード
