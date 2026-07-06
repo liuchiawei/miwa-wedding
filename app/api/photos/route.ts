@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyAdmin } from "@/lib/admin-auth";
 import { getDb } from "@/lib/db";
-import { getAutoApproveUploads } from "@/lib/site-settings";
+import { getAutoApproveUploads } from "@/lib/site-configs";
 
 function isValidBlobUrl(url: string): boolean {
   try {

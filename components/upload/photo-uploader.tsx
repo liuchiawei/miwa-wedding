@@ -5,6 +5,7 @@ import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { MESSAGES } from "@/lib/message";
 
 type UploadStatus = "pending" | "uploading" | "done" | "error";
 
@@ -161,7 +162,7 @@ export function PhotoUploader() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4">
         <label className="flex flex-col gap-1 text-sm">
-          お名前（任意）
+          {MESSAGES.upload.name}（任意）
           <input
             type="text"
             value={guestName}
@@ -230,7 +231,7 @@ export function PhotoUploader() {
               )}
               {item.status === "uploading" && (
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs">アップロード中 {item.progress}%</span>
+                  <span className="text-xs">{MESSAGES.upload.pending} {item.progress}%</span>
                   <progress value={item.progress} max={100} className="w-full" />
                 </div>
               )}
@@ -249,7 +250,7 @@ export function PhotoUploader() {
                     onClick={() => retryUpload(item.id)}
                     disabled={isUploading}
                   >
-                    再試行
+                    {MESSAGES.upload.retry}
                   </Button>
                 </div>
               )}
@@ -266,7 +267,7 @@ export function PhotoUploader() {
           disabled={isUploading}
           className="w-full"
         >
-          {isUploading ? "アップロード中..." : "アップロード"}
+          {isUploading ? MESSAGES.upload.pending : MESSAGES.upload.upload}
         </Button>
       )}
 

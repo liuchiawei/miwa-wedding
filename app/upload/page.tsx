@@ -1,9 +1,10 @@
 import { PhotoUploader } from "@/components/upload/photo-uploader";
+import { MESSAGES } from "@/lib/message";
 
 export default function UploadPage() {
   return (
     <main>
-      <h1>写真をアップロード</h1>
+      <h1>{MESSAGES.upload.title}</h1>
       <PhotoUploader />
     </main>
   );

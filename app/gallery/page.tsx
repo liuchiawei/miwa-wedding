@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getDb } from "@/lib/db";
+import { MESSAGES } from "@/lib/message";
 
 export default async function GalleryPage() {
   const photos = await getDb().photo.findMany({
@@ -9,9 +10,9 @@ export default async function GalleryPage() {
 
   return (
     <main>
-      <h1>フォトギャラリー</h1>
+      <h1>{MESSAGES.gallery.title}</h1>
       {photos.length === 0 ? (
-        <p>まだ写真がありません。</p>
+        <p>{MESSAGES.gallery.empty}</p>
       ) : (
         <ul>
           {photos.map((photo) => (

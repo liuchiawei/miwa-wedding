@@ -3,7 +3,7 @@ import { verifyAdmin } from "@/lib/admin-auth";
 import {
   getAutoApproveUploads,
   setAutoApproveUploads,
-} from "@/lib/site-settings";
+} from "@/lib/site-configs";
 
 export async function GET(request: Request) {
   if (!(await verifyAdmin(request))) {

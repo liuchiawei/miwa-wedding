@@ -11,8 +11,9 @@ function createPrismaClient() {
 const globalForPrisma = globalThis as { prisma?: PrismaClient };
 
 export function getDb() {
-  if (globalForPrisma.prisma && !("siteSetting" in globalForPrisma.prisma)) {
-    void globalForPrisma.prisma.$disconnect();
+  const cached = globalForPrisma.prisma;
+  if (cached && !("siteSetting" in (cached as object))) {
+    void cached.$disconnect();
     globalForPrisma.prisma = undefined;
   }
 
