@@ -29,7 +29,7 @@ export default function PhotoDialog({
           alt={alt ?? "Wedding Photo"}
           width={1000}
           height={1000}
-          className="w-full h-full object-cover"
+          className="size-full object-cover"
         />
         <div aria-label="Photo Details" className="absolute bottom-0 left-0 p-4 *:text-white *:text-shadow-md">
           {author && <h1 className="text-2xl font-bold">{author}</h1>}
