@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getDb } from "@/lib/db";
 import PageContainer from "@/components/layout/page-container";
 import PhotoDialog from "./photo-dialog";
