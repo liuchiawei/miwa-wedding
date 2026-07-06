@@ -22,14 +22,19 @@ export default function AdminPage() {
   const [isSavingSettings, setIsSavingSettings] = useState(false);
   const [actionError, setActionError] = useState("");
 
-  const loadPhotos = useCallback(async () => {
-    try {
-      const [pendingRes, approvedRes, settingsRes] = await Promise.all([
-        fetch("/api/photos?pending=true"),
-        fetch("/api/photos"),
-        fetch("/api/admin/settings"),
-      ]);
+  const fetchPhotoResponses = () =>
+    Promise.all([
+      fetch("/api/photos?pending=true"),
+      fetch("/api/photos"),
+      fetch("/api/admin/settings"),
+    ]);
 
+  const applyPhotoData = useCallback(
+    async (
+      pendingRes: Response,
+      approvedRes: Response,
+      settingsRes: Response,
+    ) => {
       if (pendingRes.status === 401) {
         setAuthenticated(false);
         return;
@@ -52,15 +57,40 @@ export default function AdminPage() {
       } else {
         setAutoApproveUploads(true);
       }
+    },
+    [],
+  );
+
+  const loadPhotos = useCallback(async () => {
+    try {
+      const [pendingRes, approvedRes, settingsRes] = await fetchPhotoResponses();
+      await applyPhotoData(pendingRes, approvedRes, settingsRes);
     } catch {
       setActionError("写真の読み込みに失敗しました。");
       setAuthenticated(false);
     }
-  }, []);
+  }, [applyPhotoData]);
 
   useEffect(() => {
-    void loadPhotos();
-  }, [loadPhotos]);
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const [pendingRes, approvedRes, settingsRes] =
+          await fetchPhotoResponses();
+        if (cancelled) return;
+        await applyPhotoData(pendingRes, approvedRes, settingsRes);
+      } catch {
+        if (cancelled) return;
+        setActionError("写真の読み込みに失敗しました。");
+        setAuthenticated(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [applyPhotoData]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,7 +227,7 @@ export default function AdminPage() {
         <p>オフにすると、公開前に管理者の承認が必要になります。</p>
       </section>
 
-      <section>
+      <section aria-label="Pending Photos">
         <h2>審核待ち</h2>
         {pendingPhotos.length === 0 ? (
           <p>審核待ちの写真はありません。</p>
@@ -226,20 +256,20 @@ export default function AdminPage() {
         )}
       </section>
 
-      <section>
+      <section aria-label="Approved Photos">
         <h2>承認済み</h2>
         {approvedPhotos.length === 0 ? (
           <p>承認済みの写真はありません。</p>
         ) : (
-          <ul>
+          <ul aria-label="Approved Photos List" className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
             {approvedPhotos.map((photo) => (
               <li key={photo.id}>
                 <Image
                   src={photo.blobUrl}
                   alt={photo.guestName ?? "Approved photo"}
-                  width={200}
-                  height={200}
-                  style={{ width: "auto", height: "auto", maxWidth: 200 }}
+                  width={240}
+                  height={240}
+                  className="size-full object-cover"
                 />
                 {photo.guestName && <p>{photo.guestName}</p>}
                 <button type="button" onClick={() => patchPhoto(photo.id, false)}>
