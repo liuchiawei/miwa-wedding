@@ -65,4 +65,4 @@ export const MESSAGES = {
   footer,
   gallery,
   upload,
-} as const;
+};

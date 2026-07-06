@@ -1,5 +1,4 @@
 import { getDb } from "@/lib/db";
-import PageContainer from "@/components/layout/page-container";
 import PhotoDialog from "./photo-dialog";
 import { MESSAGES } from "@/lib/message";
 
@@ -10,7 +9,7 @@ export default async function GalleryPage() {
   });
 
   return (
-    <PageContainer>
+    <>
       <h1>{MESSAGES.gallery.title}</h1>
       {photos.length === 0 ? (
         <p>{MESSAGES.gallery.empty}</p>
@@ -27,6 +26,6 @@ export default async function GalleryPage() {
           ))}
         </ul>
       )}
-    </PageContainer>
+    </>
   );
 }
