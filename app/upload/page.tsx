@@ -1,11 +1,12 @@
-import { PhotoUploader } from "@/components/upload/photo-uploader";
+import { PhotoUploader } from "@/components/section/photo-uploader";
+import PageContainer from "@/components/layout/page-container";
 import { MESSAGES } from "@/lib/message";
 
 export default function UploadPage() {
   return (
-    <main>
+    <PageContainer>
       <h1>{MESSAGES.upload.title}</h1>
       <PhotoUploader />
-    </main>
+    </PageContainer>
   );
 }

@@ -8,6 +8,7 @@ import {
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { cn } from "@/lib/utils";
+import Footer from "@/components/layout/footer";
 
 const playfairDisplayHeading = Playfair_Display({
   subsets: ["latin"],
@@ -49,7 +50,10 @@ export default function RootLayout({
         playfairDisplayHeading.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Footer />
+      </body>
       <Analytics />
     </html>
   );

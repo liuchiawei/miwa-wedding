@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { getDb } from "@/lib/db";
+import PageContainer from "@/components/layout/page-container";
+import PhotoDialog from "./photo-dialog";
 import { MESSAGES } from "@/lib/message";
 
 export default async function GalleryPage() {
@@ -9,27 +11,21 @@ export default async function GalleryPage() {
   });
 
   return (
-    <main>
+    <PageContainer>
       <h1>{MESSAGES.gallery.title}</h1>
       {photos.length === 0 ? (
         <p>{MESSAGES.gallery.empty}</p>
       ) : (
-        <ul>
+        <ul className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {photos.map((photo) => (
             <li key={photo.id}>
-              <Image
-                src={photo.blobUrl}
-                alt={photo.guestName ?? "Wedding photo"}
-                width={400}
-                height={400}
-                style={{ width: "auto", height: "auto", maxWidth: 400 }}
-              />
+              <PhotoDialog src={photo.blobUrl} />
               {photo.guestName && <p>{photo.guestName}</p>}
               {photo.message && <p>{photo.message}</p>}
             </li>
           ))}
         </ul>
       )}
-    </main>
+    </PageContainer>
   );
 }

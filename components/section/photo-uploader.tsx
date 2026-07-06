@@ -159,8 +159,8 @@ export function PhotoUploader() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-4">
+    <div className="w-full space-y-4">
+      <div className="w-full space-y-2">
         <label className="flex flex-col gap-1 text-sm">
           {MESSAGES.upload.name}（任意）
           <input

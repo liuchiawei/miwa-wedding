@@ -31,7 +31,8 @@ const navigation = {
 };
 
 const footer = {
-  copyright: "© 2026 Miwa Wedding",
+  backToTop: "トップへ戻る",
+  copyright: `© ${new Date().getFullYear()} Miwa Wedding. All rights reserved.`,
 };
 
 const contact = {
