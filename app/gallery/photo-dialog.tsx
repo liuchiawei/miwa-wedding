@@ -4,9 +4,13 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 export default function PhotoDialog({
   src,
   alt,
+  author,
+  message,
 }: {
   src: string;
   alt?: string;
+  author?: string;
+  message?: string;
 }) {
   return (
     <Dialog>
@@ -27,6 +31,10 @@ export default function PhotoDialog({
           height={1000}
           className="w-full h-full object-cover"
         />
+        <div aria-label="Photo Details" className="absolute bottom-0 left-0 p-4 *:text-white *:text-shadow-md">
+          {author && <h1 className="text-2xl font-bold">{author}</h1>}
+          {message && <p className="text-lg">{message}</p>}
+        </div>
       </DialogContent>
     </Dialog>
   );

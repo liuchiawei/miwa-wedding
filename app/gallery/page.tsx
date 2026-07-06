@@ -19,9 +19,11 @@ export default async function GalleryPage() {
         <ul className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {photos.map((photo) => (
             <li key={photo.id}>
-              <PhotoDialog src={photo.blobUrl} />
-              {photo.guestName && <p>{photo.guestName}</p>}
-              {photo.message && <p>{photo.message}</p>}
+              <PhotoDialog
+                src={photo.blobUrl}
+                author={photo.guestName || undefined}
+                message={photo.message || undefined}
+              />
             </li>
           ))}
         </ul>
