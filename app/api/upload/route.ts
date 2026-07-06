@@ -8,7 +8,7 @@ export async function POST(request: Request) {
     const jsonResponse = await handleUpload({
       request,
       body,
-      onBeforeGenerateToken: async (_pathname, clientPayload, _multipart) => {
+      onBeforeGenerateToken: async (_pathname, clientPayload) => {
         const callbackUrl =
           process.env.VERCEL_BLOB_CALLBACK_URL ??
           (process.env.NODE_ENV === "development"
