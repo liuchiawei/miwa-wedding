@@ -61,7 +61,11 @@ export function PhotoUploader() {
 
   const uploadFile = useCallback(
     async (item: FileItem) => {
-      updateItem(item.id, { status: "uploading", progress: 0, error: undefined });
+      updateItem(item.id, {
+        status: "uploading",
+        progress: 0,
+        error: undefined,
+      });
 
       try {
         const compressed = await compressImage(item.file);
@@ -194,16 +198,6 @@ export function PhotoUploader() {
         className="sr-only"
       />
 
-      <Button
-        type="button"
-        size="lg"
-        onClick={() => fileInputRef.current?.click()}
-        disabled={isUploading}
-        className="w-full"
-      >
-        写真を選ぶ
-      </Button>
-
       {items.length > 0 && (
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {items.map((item) => (
@@ -231,8 +225,14 @@ export function PhotoUploader() {
               )}
               {item.status === "uploading" && (
                 <div className="flex flex-col gap-1">
-                  <span className="text-xs">{MESSAGES.upload.pending} {item.progress}%</span>
-                  <progress value={item.progress} max={100} className="w-full" />
+                  <span className="text-xs">
+                    {MESSAGES.upload.pending} {item.progress}%
+                  </span>
+                  <progress
+                    value={item.progress}
+                    max={100}
+                    className="w-full"
+                  />
                 </div>
               )}
               {item.status === "done" && (
@@ -259,7 +259,7 @@ export function PhotoUploader() {
         </ul>
       )}
 
-      {hasPendingItems && (
+      {hasPendingItems ? (
         <Button
           type="button"
           size="lg"
@@ -269,8 +269,17 @@ export function PhotoUploader() {
         >
           {isUploading ? MESSAGES.upload.pending : MESSAGES.upload.upload}
         </Button>
+      ) : (
+        <Button
+          type="button"
+          size="lg"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          className="w-full"
+        >
+          写真を選ぶ
+        </Button>
       )}
-
     </div>
   );
 }
