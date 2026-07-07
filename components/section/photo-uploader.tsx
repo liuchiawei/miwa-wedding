@@ -5,7 +5,10 @@ import imageCompression from "browser-image-compression";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { MESSAGES } from "@/lib/message";
+import { Camera } from "lucide-react";
 
 type UploadStatus = "pending" | "uploading" | "done" | "error";
 
@@ -29,6 +32,7 @@ async function compressImage(file: File): Promise<File> {
 export function PhotoUploader() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const cameraInputRef = useRef<HTMLInputElement>(null);
   const [guestName, setGuestName] = useState("");
   const [message, setMessage] = useState("");
   const [items, setItems] = useState<FileItem[]>([]);
@@ -166,32 +170,42 @@ export function PhotoUploader() {
     <div className="w-full space-y-4">
       <div className="w-full space-y-2">
         <label className="flex flex-col gap-1 text-sm">
-          {MESSAGES.upload.name}（任意）
-          <input
+          <Input
+            aria-label="guest name input"
             type="text"
             value={guestName}
             onChange={(e) => setGuestName(e.target.value)}
             disabled={isUploading}
-            className="border border-border bg-background px-3 py-2"
+            className="border border-border bg-background p-2"
+            placeholder={MESSAGES.upload.name}
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          メッセージ（任意）
           <textarea
+            aria-label="message input"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             disabled={isUploading}
             rows={3}
-            className="border border-border bg-background px-3 py-2"
+            className="border border-border bg-background p-2"
+            placeholder={MESSAGES.upload.message}
           />
         </label>
       </div>
 
       <input
-        ref={fileInputRef}
+        ref={cameraInputRef}
         type="file"
         accept="image/*"
         capture="environment"
+        onChange={handleFileChange}
+        disabled={isUploading}
+        className="sr-only"
+      />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
         multiple
         onChange={handleFileChange}
         disabled={isUploading}
@@ -260,25 +274,42 @@ export function PhotoUploader() {
       )}
 
       {hasPendingItems ? (
+        // upload button
         <Button
           type="button"
           size="lg"
           onClick={handleUpload}
           disabled={isUploading}
           className="w-full"
+          aria-label="photo upload button"
         >
           {isUploading ? MESSAGES.upload.pending : MESSAGES.upload.upload}
         </Button>
       ) : (
-        <Button
-          type="button"
-          size="lg"
-          onClick={() => fileInputRef.current?.click()}
-          disabled={isUploading}
-          className="w-full"
-        >
-          写真を選ぶ
-        </Button>
+        <div className="flex gap-2">
+          {/* camera button */}
+          <Button
+            aria-label="camera button"
+            type="button"
+            size="icon-lg"
+            onClick={() => cameraInputRef.current?.click()}
+            disabled={isUploading}
+            className="aspect-square h-full"
+            >
+            <Camera className="size-4" />
+          </Button>
+          {/* / photo select button */}
+          <Button
+            aria-label="photo select button"
+            type="button"
+            size="lg"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isUploading}
+            className="flex-1"
+          >
+            写真を選ぶ
+          </Button>
+        </div>
       )}
     </div>
   );

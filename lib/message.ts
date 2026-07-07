@@ -53,8 +53,8 @@ const upload = {
   pending: "アップロード中...",
   upload: "アップロード",
   retry: "再試行",
-  name: "名前",
-  message: "メッセージ",
+  name: "名前（任意）",
+  message: "メッセージ（任意）",
 };
 
 export const MESSAGES = {
