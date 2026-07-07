@@ -176,18 +176,18 @@ export function PhotoUploader() {
             value={guestName}
             onChange={(e) => setGuestName(e.target.value)}
             disabled={isUploading}
-            className="border border-border bg-background p-2"
+            className="border-input p-2 focus-visible:border-ring"
             placeholder={MESSAGES.upload.name}
           />
         </label>
         <label className="flex flex-col gap-1 text-sm">
-          <textarea
+          <Textarea
             aria-label="message input"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             disabled={isUploading}
             rows={3}
-            className="border border-border bg-background p-2"
+            className="border-input p-2 focus-visible:border-ring"
             placeholder={MESSAGES.upload.message}
           />
         </label>

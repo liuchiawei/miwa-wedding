@@ -11,7 +11,7 @@ export default function Nav() {
   // landing page nav
   if (pathname === "/") {
     return (
-      <nav className="mx-auto p-2">
+      <nav className="mx-auto p-2 absolute bottom-0 left-0 right-0">
         <ul className="flex gap-4 justify-center">
           {Object.values(MESSAGES.navigation).map((item) => (
             <li
